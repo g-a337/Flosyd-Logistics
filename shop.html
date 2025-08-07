@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop - Flosyd Logistics</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+<body>
+    <header>
+        <h1>Shop at Flosyd Logistics</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="shop.html">Shop</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="admin.html" id="admin-link">Admin</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section>
+            <h2>Our Products</h2>
+            <div class="product-list" id="product-list">
+                <!-- Products will be populated by JavaScript -->
+            </div>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2023 Flosyd Logistics. All rights reserved.</p>
+    </footer>
+    <!-- Side Cart Drawer -->
+    <div id="side-cart" class="side-cart">
+        <div class="side-cart-header">
+            <h3>Your Cart</h3>
+            <button id="close-cart" class="close-cart-btn">&times;</button>
+        </div>
+        <ul id="side-cart-items"></ul>
+        <p id="side-cart-total"></p>
+        <a href="checkout.html" class="shop-btn" id="side-checkout-btn">Checkout</a>
+    </div>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        let defaultProducts = [
+            { name: "Classic Shirt", price: 5000, img: "img1.jpg" },
+            { name: "Elegant Dress", price: 8500, img: "img2.jpg" },
+            { name: "Blue Jeans", price: 7000, img: "img3.jpg" }
+        ];
+        let products = JSON.parse(localStorage.getItem('products')) || defaultProducts;
+        const productList = document.getElementById('product-list');
+
+        function renderProducts() {
+            productList.innerHTML = products.map((product, index) => `
+                <div class="product">
+                    <img src="${product.img}" alt="${product.name}">
+                    <h3>${product.name}</h3>
+                    <p>₦${product.price.toLocaleString()}</p>
+                    <button class="buy-btn" data-name="${product.name}" data-price="${product.price}">Add to Cart</button>
+                    <button class="remove-btn" data-index="${index}">Remove</button>
+                </div>
+            `).join('');
+        }
+
+        renderProducts();
+
+        productList.addEventListener('click', function(e) {
+            if (e.target.classList.contains('remove-btn')) {
+                const idx = e.target.getAttribute('data-index');
+                products.splice(idx, 1);
+                localStorage.setItem('products', JSON.stringify(products));
+                renderProducts();
+            }
+        });
+    });
+</script>
+    <script src="js/main.js"></script>
+    <script>
+        document.getElementById('admin-link').addEventListener('click', function(e) {
+            e.preventDefault();
+            const password = prompt("Enter admin password:");
+            if (password === "yourpassword") { // Change "yourpassword" to your secret password
+                window.location.href = "admin.html";
+            } else if (password !== null) {
+                alert("Incorrect password!");
+            }
+        });
+    </script>
+</body>
+</html>
