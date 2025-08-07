@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - Flosyd Logistics</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+<body>
+    <header>
+        <h1>Checkout</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="shop.html">Shop</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="cart.html">Cart</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section class="checkout-section">
+            <h2>Complete Your Order</h2>
+            <form id="checkout-form">
+                <input type="text" placeholder="Full Name" required><br>
+                <input type="email" placeholder="Email Address" required><br>
+                <input type="text" placeholder="Delivery Address" required><br>
+                <button type="submit" class="shop-btn">Place Order</button>
+            </form>
+            <div id="order-success" style="display:none; color:green; margin-top:20px;">
+                Thank you for your order!
+            </div>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2023 Flosyd Logistics. All rights reserved.</p>
+    </footer>
+    <script>
+        document.getElementById('checkout-form').onsubmit = function(e) {
+            e.preventDefault();
+            document.getElementById('order-success').style.display = 'block';
+            localStorage.removeItem('cart');
+        }
+    </script>
+</body>
+</html>

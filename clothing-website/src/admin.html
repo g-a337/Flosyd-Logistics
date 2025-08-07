@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Add Products</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+<body>
+    <header>
+        <h1>Admin: Add Product</h1>
+        <nav>
+            <ul>
+                <li><a href="shop.html">Shop</a></li>
+                <li><a href="admin.html">Admin</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section class="admin-section">
+            <h2>Add New Product</h2>
+            <form id="add-product-form">
+                <input type="text" id="product-name" placeholder="Product Name" required><br>
+                <input type="number" id="product-price" placeholder="Price (₦)" required><br>
+                <input type="text" id="product-img" placeholder="Image Path (e.g., assets/new.jpg)" required><br>
+                <button type="submit" class="shop-btn">Add Product</button>
+            </form>
+            <div id="add-success" style="display:none; color:green; margin-top:20px;">
+                Product added!
+            </div>
+        </section>
+    </main>
+    <script>
+        document.getElementById('add-product-form').onsubmit = function(e) {
+            e.preventDefault();
+            const name = document.getElementById('product-name').value;
+            const price = parseInt(document.getElementById('product-price').value);
+            const img = document.getElementById('product-img').value;
+            let products = JSON.parse(localStorage.getItem('products')) || [];
+            products.push({ name, price, img });
+            localStorage.setItem('products', JSON.stringify(products));
+            document.getElementById('add-success').style.display = 'block';
+            this.reset();
+        }
+    </script>
+    <script>
+        //simulated user role
+        const userRole = 'admin'; // Change to 'user' to test non-admin access
+        //prevent non-admin users from accessing admin page
+        if (userRole !== 'admin') {
+            alert('Access denied. Admins only.');
+            window.location.href = 'shop.html'; // Redirect to shop page
+        }
+    </script>
+</body>
+</html>
